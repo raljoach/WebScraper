@@ -16,6 +16,7 @@ namespace Airbnb.ScraperTool
             var scraper = new AirbnbScraper(urls);
             var table = scraper.Scrape();
             table.ExportCsv("newport.csv");
+            Console.ReadLine();
         }
     }
 }
