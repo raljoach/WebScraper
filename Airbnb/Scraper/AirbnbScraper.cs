@@ -8,6 +8,14 @@ using TableData;
 namespace Airbnb.Scraper
 {
     /* Scrapes Airbnb search results pages
+     * 
+     * Data Model:
+     * [Airbnb search results page] has a [url] and [content]
+     * within the [content] there are [listings] and [pagination links or page urls]:
+     * [SearchResults] contains [Listings] [Pages]
+     * [Listing] contains [title],[link],[rating][facilities][price][reviews][roominfo]
+     * [Pages] contains [Page]
+     * [Page] contains [url] and [content]
      */
     public class AirbnbScraper
     {
@@ -17,7 +25,8 @@ namespace Airbnb.Scraper
             _urls = urls;
         }
 
-        /* For each main search results url
+        /* Scrape algorithm:
+         * For each search results url
          *   Get Pages
          *   Get listings for each page
          *   Get information for each listing
