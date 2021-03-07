@@ -37,10 +37,9 @@ namespace Airbnb.Scraper
             {                
                 using (_driver = new ChromeDriver())
                 {
-                    var morePages = true;
-                    while (morePages)
-                    {
-                        var page = GetPage(url);
+                    var page = GetPage(url);
+                    while (page!=null)
+                    {                        
                         var listings = GetListings(page);
                         foreach (var listing in listings)
                         {
@@ -48,14 +47,14 @@ namespace Airbnb.Scraper
                             table.Add(info);
                         }
 
-                        morePages = ClickNextPage();
+                        page = ClickNextPage();
                     }
                 }
             }
             return table;
         }
 
-        private bool ClickNextPage()
+        private Page ClickNextPage()
         {
             throw new NotImplementedException();
         }
