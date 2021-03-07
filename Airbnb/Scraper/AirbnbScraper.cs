@@ -24,9 +24,40 @@ namespace Airbnb.Scraper
     public class AirbnbScraper
     {
         private List<string> _urls;
+        private IWebDriver _driver;
         public AirbnbScraper(List<string> urls)
         {
             _urls = urls;
+        }
+
+        public Table Scrape()
+        {
+            var table = new Table();
+            foreach (var url in _urls)
+            {                
+                using (_driver = new ChromeDriver())
+                {
+                    var morePages = true;
+                    while (morePages)
+                    {
+                        var page = GetPage(url);
+                        var listings = GetListings(page);
+                        foreach (var listing in listings)
+                        {
+                            var info = GetInformation(listing);
+                            table.Add(info);
+                        }
+
+                        morePages = ClickNextPage();
+                    }
+                }
+            }
+            return table;
+        }
+
+        private bool ClickNextPage()
+        {
+            throw new NotImplementedException();
         }
 
         /* Scrape algorithm:
@@ -36,19 +67,22 @@ namespace Airbnb.Scraper
          *   Get information for each listing
          *   Add to table
          */
-        public Table Scrape()
+        public Table ScrapeOld()
         {
             var table = new Table();
             foreach (var url in _urls)
             {
-                var pages = GetPages(url);
-                foreach (var page in pages)
+                using (IWebDriver driver = new ChromeDriver())
                 {
-                    var listings = GetListings(page);
-                    foreach (var listing in listings)
+                    var pages = GetPages(url);
+                    foreach (var page in pages)
                     {
-                        var info = GetInformation(listing);
-                        table.Add(info);
+                        var listings = GetListings(page);
+                        foreach (var listing in listings)
+                        {
+                            var info = GetInformation(listing);
+                            table.Add(info);
+                        }
                     }
                 }
             }
