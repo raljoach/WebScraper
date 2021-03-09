@@ -56,7 +56,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirbnbNavigator.cs" />
     <Compile Include="AirbnbScraper.cs" />
+    <Compile Include="AirbnbScraperOld.cs" />
+    <Compile Include="AirbnbSelector.cs" />
     <Compile Include="Listing.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
