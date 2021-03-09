@@ -3,10 +3,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TableData;
 
 namespace Airbnb.Scraper
 {
@@ -29,7 +25,7 @@ namespace Airbnb.Scraper
             
         }
 
-        public List<TableRow> GetListings()
+        public List<Listing> GetListings()
         {
             throw new NotImplementedException();
         }
