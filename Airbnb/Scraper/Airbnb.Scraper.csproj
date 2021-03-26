@@ -56,14 +56,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirbnbWebSite.cs" />
-    <Compile Include="AirbnbNavigator.cs" />
-    <Compile Include="AirbnbScraper.cs" />
-    <Compile Include="AirbnbScraperOld.cs" />
-    <Compile Include="AirbnbSelector.cs" />
-    <Compile Include="Listing.cs" />
-    <Compile Include="ListingExtensions.cs" />
-    <Compile Include="Page.cs" />
+    <Compile Include="old\AirbnbWebSite.cs" />
+    <Compile Include="old\AirbnbNavigator.cs" />
+    <Compile Include="old\AirbnbScraper.cs" />
+    <Compile Include="old\AirbnbScraperOld.cs" />
+    <Compile Include="old\AirbnbSelector.cs" />
+    <Compile Include="old\Listing.cs" />
+    <Compile Include="old\ListingExtensions.cs" />
+    <Compile Include="old\Page.cs" />
+    <Compile Include="Pages\AirbnbSearchPage.cs" />
+    <Compile Include="Pages\AirbnbSearchPageElements.cs" />
+    <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +76,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="old\packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Selenium.WebDriver.ChromeDriver.89.0.4389.2300\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\..\packages\Selenium.WebDriver.ChromeDriver.89.0.4389.2300\build\Selenium.WebDriver.ChromeDriver.targets')" />
