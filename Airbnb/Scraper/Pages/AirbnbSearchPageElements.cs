@@ -8,7 +8,7 @@ namespace Airbnb.Scraper.Pages
 {
     public class AirbnbSearchPageElements : BasePage
     {
-        protected string QueryInput
+        protected string Query
         {
             get
             {

@@ -22,25 +22,35 @@ namespace Airbnb.Scraper.Pages
             _driver.Navigate().GoToUrl(SEARCH_URL);
 
             // wait for location box to appear
-            wait.Until(webDriver => webDriver.FindElement(By.CssSelector(QueryInput)).Displayed);
+            wait.Until(webDriver => webDriver.FindElement(By.CssSelector(Query)).Displayed);
         }
 
-        public void SetLocation(string location)
+        public void SetQuery(string location)
         {
-            var locationBox = _driver.FindElement(By.CssSelector(QueryInput));
-            locationBox.SendKeys(location);
+            var locationBox = _driver.FindElement(By.CssSelector(Query));
+            //locationBox.Clear();
+            //locationBox.SendKeys(location);
+
+            var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("document.getElementsByName('query')[0].setAttribute('value', '"+ location + "')");
         }
 
         public void SetCheckIn(DateTime date)
         {
             var checkin = _driver.FindElement(By.CssSelector(CheckIn));
-            checkin.SendKeys(date.DayOfWeek + ", " + date.Month + " " + date.Day);
+            //checkin.SendKeys(date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day);
+
+            var js = (IJavaScriptExecutor)_driver;                  
+            js.ExecuteScript("document.getElementsByName('checkin')[0].setAttribute('value', '"+ date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day + "')");
         }
 
         public void SetCheckOut(DateTime date)
         {
             var checkout = _driver.FindElement(By.CssSelector(CheckOut));
-            checkout.SendKeys(date.DayOfWeek + ", " + date.Month + " " + date.Day);
+            //checkout.SendKeys(date.DayOfWeek + ", " + date.Month + " " + date.Day);
+
+            var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("document.getElementsByName('checkout')[0].setAttribute('value', '" + date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day + "')");
         }
 
         public void Search()

@@ -1,4 +1,5 @@
 ﻿using Airbnb.Scraper;
+using Airbnb.Scraper.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,10 @@ namespace Airbnb.ScraperTool
             //FirstTry();
 
             var airbnb = new AirbnbSearchPage();
-
+            airbnb.SetCheckIn(new DateTime(2021, 04, 03));
+            airbnb.SetCheckOut(new DateTime(2021, 04, 10));
+            airbnb.SetQuery("Depoe Bay, OR");
+            airbnb.Search();
 
 
             Console.ReadLine();
