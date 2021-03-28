@@ -31,8 +31,21 @@ namespace Airbnb.Scraper.Pages
             //locationBox.Clear();
             //locationBox.SendKeys(location);
 
-            var js = (IJavaScriptExecutor)_driver;
-            js.ExecuteScript("document.getElementsByName('query')[0].setAttribute('value', '"+ location + "')");
+            /*var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("document.getElementsByName('query')[0].setAttribute('value', '   ')");
+
+            locationBox.Clear();
+            locationBox.SendKeys(location);
+            //var dropDown = _driver.FindElement(By.Id("query__listbox"));
+            //if (dropDown != null) Console.WriteLine("Found");
+            */
+            for (var i = 0; i < "Newport, OR".Length; i++)
+            {
+                locationBox.SendKeys(Keys.Backspace);
+            }
+
+            locationBox.SendKeys(location);
+            locationBox.SendKeys(Keys.Enter);
         }
 
         public void SetCheckIn(DateTime date)
