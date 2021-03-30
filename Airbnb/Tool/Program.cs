@@ -16,9 +16,10 @@ namespace Airbnb.ScraperTool
             //FirstTry();
 
             var airbnb = new AirbnbSearchPage();
+            airbnb.SetQuery("Depoe Bay, OR");
             airbnb.SetCheckIn(new DateTime(2021, 04, 03));
             airbnb.SetCheckOut(new DateTime(2021, 04, 10));
-            airbnb.SetQuery("Depoe Bay, OR");
+            
             airbnb.Search();
 
 

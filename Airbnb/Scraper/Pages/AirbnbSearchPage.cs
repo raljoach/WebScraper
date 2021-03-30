@@ -45,7 +45,9 @@ namespace Airbnb.Scraper.Pages
             }
 
             locationBox.SendKeys(location);
-            locationBox.SendKeys(Keys.Enter);
+            _driver.FindElements(By.TagName("ul"))[0].FindElements(By.TagName("li"))[0].Click();
+            //locationBox.SendKeys(Keys.Enter);
+            //locationBox.Click();
         }
 
         public void SetCheckIn(DateTime date)
@@ -55,6 +57,27 @@ namespace Airbnb.Scraper.Pages
 
             var js = (IJavaScriptExecutor)_driver;                  
             js.ExecuteScript("document.getElementsByName('checkin')[0].setAttribute('value', '"+ date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day + "')");
+
+            var calendar = _driver.FindElements(By.TagName("table"))[1];
+
+            // TODO: Change the month -> it's a sibling previous sibling
+            var month = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
+            if(!month.Text.StartsWith(date.ToString("MMMMMMMMM").Trim()))
+            {
+                // TODO: click on previous or next button to get to the correct month
+            }
+
+            // This assumes the current month is the correct month
+            
+            var days = calendar.FindElements(By.TagName("td"));
+            foreach(var day in days)
+            {
+                if(int.Parse(day.Text) == date.Day)
+                {
+                    day.Click();
+                    break;
+                }
+            }
         }
 
         public void SetCheckOut(DateTime date)
