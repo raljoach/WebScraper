@@ -2,10 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Airbnb.Scraper.Pages
 {
@@ -28,65 +25,25 @@ namespace Airbnb.Scraper.Pages
         public void SetQuery(string location)
         {
             var locationBox = _driver.FindElement(By.CssSelector(Query));
-            //locationBox.Clear();
-            //locationBox.SendKeys(location);
-
-            /*var js = (IJavaScriptExecutor)_driver;
-            js.ExecuteScript("document.getElementsByName('query')[0].setAttribute('value', '   ')");
-
-            locationBox.Clear();
-            locationBox.SendKeys(location);
-            //var dropDown = _driver.FindElement(By.Id("query__listbox"));
-            //if (dropDown != null) Console.WriteLine("Found");
-            */
             for (var i = 0; i < "Newport, OR".Length; i++)
             {
                 locationBox.SendKeys(Keys.Backspace);
             }
 
             locationBox.SendKeys(location);
-            _driver.FindElements(By.TagName("ul"))[0].FindElements(By.TagName("li"))[0].Click();
-            //locationBox.SendKeys(Keys.Enter);
-            //locationBox.Click();
+            _driver.FindElements(By.TagName("ul"))[0].FindElements(By.TagName("li"))[0].FindElements(By.CssSelector("*"))[0].Click();
         }
 
         public void SetCheckIn(DateTime date)
         {
-            var checkin = _driver.FindElement(By.CssSelector(CheckIn));
-            //checkin.SendKeys(date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day);
-
-            var js = (IJavaScriptExecutor)_driver;                  
-            js.ExecuteScript("document.getElementsByName('checkin')[0].setAttribute('value', '"+ date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day + "')");
-
-            var calendar = _driver.FindElements(By.TagName("table"))[1];
-
-            // TODO: Change the month -> it's a sibling previous sibling
-            var month = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
-            if(!month.Text.StartsWith(date.ToString("MMMMMMMMM").Trim()))
-            {
-                // TODO: click on previous or next button to get to the correct month
-            }
-
-            // This assumes the current month is the correct month
-            
-            var days = calendar.FindElements(By.TagName("td"));
-            foreach(var day in days)
-            {
-                if(int.Parse(day.Text) == date.Day)
-                {
-                    day.Click();
-                    break;
-                }
-            }
+            var checkin = _driver.FindElement(By.CssSelector(CheckIn));                        
+            SelectDate(checkin, date, "checkin");
         }
 
         public void SetCheckOut(DateTime date)
         {
-            var checkout = _driver.FindElement(By.CssSelector(CheckOut));
-            //checkout.SendKeys(date.DayOfWeek + ", " + date.Month + " " + date.Day);
-
-            var js = (IJavaScriptExecutor)_driver;
-            js.ExecuteScript("document.getElementsByName('checkout')[0].setAttribute('value', '" + date.ToString("ddd") + ", " + date.ToString("MMM") + " " + date.Day + "')");
+            var checkout = _driver.FindElement(By.CssSelector(CheckOut));            
+            SelectDate(checkout, date, "checkout");
         }
 
         public void Search()
@@ -95,7 +52,66 @@ namespace Airbnb.Scraper.Pages
             submit.Click();
         }
 
-        
+        private void SelectDate(IWebElement dateControl, DateTime setDate, string controlName)
+        {
+            var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("document.getElementsByName('" + controlName + "')[0].setAttribute('value', '" + setDate.ToString("ddd") + ", " + setDate.ToString("MMM") + " " + setDate.Day + "')");
+
+            dateControl.Click();
+            var calendar = _driver.FindElements(By.TagName("table"))[1];
+            
+            var monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
+            var tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var currentMonthName = tokens[0];
+            var currentYear = int.Parse(tokens[1]);
+            var currentMonthNum = GetMonthNumber(currentMonthName);
+            var setMonthName = setDate.ToString("MMMMMMMMM").Trim();
+            var setMonthNum = GetMonthNumber(setMonthName);
+            var setYear = setDate.Year;
+
+            while (currentYear < setYear || currentMonthNum < setMonthNum)
+            {                                                
+                var next =_driver.FindElement(By.CssSelector(NextMonth)).FindElement(By.TagName("button"));
+                next.Click();
+
+                calendar = _driver.FindElements(By.TagName("table"))[1];
+                monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
+                tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                currentMonthName = tokens[0];
+                currentYear = int.Parse(tokens[1]);
+                currentMonthNum = GetMonthNumber(currentMonthName);
+            }
+
+            while (currentYear > setYear || currentMonthNum > setMonthNum)
+            {
+                var previous = _driver.FindElement(By.CssSelector(PreviousMonth)).FindElement(By.TagName("button"));
+                previous.Click();
+
+                calendar = _driver.FindElements(By.TagName("table"))[1];
+                monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
+                tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                currentMonthName = tokens[0];
+                currentYear = int.Parse(tokens[1]);
+                currentMonthNum = GetMonthNumber(currentMonthName);
+            }            
+
+            var days = calendar.FindElements(By.TagName("td"));
+            foreach (var day in days)
+            {
+                if (int.TryParse(day.Text, out int num) && num == setDate.Day)
+                {
+                    day.Click();
+                    break;
+                }
+            }
+        }
+
+        private static int GetMonthNumber(string monthname)
+        {
+            int monthNumber = 0;
+            monthNumber = DateTime.ParseExact(monthname, "MMMM", CultureInfo.CurrentCulture).Month;
+            return monthNumber;
+        }
 
         ~AirbnbSearchPage()
         {

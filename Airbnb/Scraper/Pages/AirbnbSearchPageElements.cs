@@ -39,5 +39,21 @@ namespace Airbnb.Scraper.Pages
                 return Css("button", "id", "submit_btn");
             }
         }
+
+        protected string PreviousMonth
+        {
+            get
+            {
+                return Css("div", "data-testid", "calendar-nav-back");
+            }
+        }
+
+        protected string NextMonth
+        {
+            get
+            {
+                return Css("div", "data-testid", "calendar-nav-next");
+            }
+        }
     }
 }
