@@ -12,5 +12,10 @@ namespace Airbnb.Scraper.Pages
         {
             return $"{elementType}[{attribute}='{value}']";
         }
+
+        protected string CssBegins(string elementType, string attribute, string value)
+        {
+            return $"{elementType}[{attribute}^='{value}']";
+        }
     }
 }

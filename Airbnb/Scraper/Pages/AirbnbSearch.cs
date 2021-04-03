@@ -6,11 +6,11 @@ using System.Globalization;
 
 namespace Airbnb.Scraper.Pages
 {
-    public class AirbnbSearchPage : AirbnbSearchPageElements
+    public class AirbnbSearch : AirbnbBase
     {
         private const string SEARCH_URL = "https://www.airbnb.com/newport-or/stays";
         private IWebDriver _driver;
-        public AirbnbSearchPage()
+        public AirbnbSearch()
         {
             _driver = new ChromeDriver();
 
@@ -46,10 +46,13 @@ namespace Airbnb.Scraper.Pages
             SelectDate(checkout, date, "checkout");
         }
 
-        public void Search()
+        public AirbnbSearchResults Search()
         {
             var submit = _driver.FindElement(By.CssSelector(SearchButton));
             submit.Click();
+
+
+            return new AirbnbSearchResults(_driver);
         }
 
         private void SelectDate(IWebElement dateControl, DateTime setDate, string controlName)
@@ -113,7 +116,7 @@ namespace Airbnb.Scraper.Pages
             return monthNumber;
         }
 
-        ~AirbnbSearchPage()
+        ~AirbnbSearch()
         {
             if(_driver!=null)
             {

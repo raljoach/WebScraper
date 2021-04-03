@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Scraper.Pages
 {
-    public class AirbnbSearchPageElements : BasePage
+    public class AirbnbBase : BasePage
     {
         protected string Query
         {
@@ -53,6 +53,14 @@ namespace Airbnb.Scraper.Pages
             get
             {
                 return Css("div", "data-testid", "calendar-nav-next");
+            }
+        }
+
+        protected string Listings
+        {
+            get
+            {
+                return CssBegins("a", "href", "/rooms");
             }
         }
     }

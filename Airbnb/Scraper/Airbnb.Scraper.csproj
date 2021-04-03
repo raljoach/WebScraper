@@ -64,8 +64,10 @@
     <Compile Include="old\Listing.cs" />
     <Compile Include="old\ListingExtensions.cs" />
     <Compile Include="old\Page.cs" />
-    <Compile Include="Pages\AirbnbSearchPage.cs" />
-    <Compile Include="Pages\AirbnbSearchPageElements.cs" />
+    <Compile Include="Pages\AirbnbListing.cs" />
+    <Compile Include="Pages\AirbnbSearch.cs" />
+    <Compile Include="Pages\AirbnbBase.cs" />
+    <Compile Include="Pages\AirbnbSearchResults.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
