@@ -1,7 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Airbnb.Scraper.Pages
@@ -31,7 +33,22 @@ namespace Airbnb.Scraper.Pages
             }
 
             locationBox.SendKeys(location);
-            _driver.FindElements(By.TagName("ul"))[0].FindElements(By.TagName("li"))[0].FindElements(By.CssSelector("*"))[0].Click();
+
+            //_driver.FindElements(By.TagName("ul"))[0].FindElements(By.TagName("li"))[0].FindElements(By.CssSelector("*"))[0].Click();
+
+            /*
+            var locationDropDown = _driver.FindElement(By.CssSelector(Location));
+            locationDropDown.FindElements(By.TagName("li"))[0].FindElements(By.CssSelector("*"))[0].Click();
+            */
+            /*
+            var label = locationBox.FindElement(By.XPath("parent::label"));
+            var div = label.FindElement(By.XPath("parent::div"));
+            var dropDown = div.FindElement(By.XPath("following-sibling::ul"));
+            dropDown.Click();
+            */
+            
+            var ac = new Actions(_driver);
+            ac.MoveToElement(locationBox).MoveByOffset(10, 10).Click().Perform();
         }
 
         public void SetCheckIn(DateTime date)
@@ -51,7 +68,9 @@ namespace Airbnb.Scraper.Pages
             var submit = _driver.FindElement(By.CssSelector(SearchButton));
             submit.Click();
 
-
+            var newTb = new List<string>(_driver.WindowHandles);
+            //switch to new tab
+            _driver.SwitchTo().Window(newTb[1]);
             return new AirbnbSearchResults(_driver);
         }
 
@@ -61,8 +80,8 @@ namespace Airbnb.Scraper.Pages
             js.ExecuteScript("document.getElementsByName('" + controlName + "')[0].setAttribute('value', '" + setDate.ToString("ddd") + ", " + setDate.ToString("MMM") + " " + setDate.Day + "')");
 
             dateControl.Click();
-            var calendar = _driver.FindElements(By.TagName("table"))[1];
-            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            var calendar = _driver.FindElements(By.TagName("table"))[1];            
             var monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
             var tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var currentMonthName = tokens[0];
@@ -76,7 +95,7 @@ namespace Airbnb.Scraper.Pages
             {                                                
                 var next =_driver.FindElement(By.CssSelector(NextMonth)).FindElement(By.TagName("button"));
                 next.Click();
-
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
                 calendar = _driver.FindElements(By.TagName("table"))[1];
                 monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
                 tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -89,7 +108,7 @@ namespace Airbnb.Scraper.Pages
             {
                 var previous = _driver.FindElement(By.CssSelector(PreviousMonth)).FindElement(By.TagName("button"));
                 previous.Click();
-
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
                 calendar = _driver.FindElements(By.TagName("table"))[1];
                 monthControl = calendar.FindElement(By.XPath("preceding-sibling::div")).FindElement(By.TagName("div"));
                 tokens = monthControl.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

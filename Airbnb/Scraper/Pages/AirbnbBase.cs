@@ -16,6 +16,14 @@ namespace Airbnb.Scraper.Pages
             }
         }
 
+        protected string Location
+        {
+            get
+            {
+                return Css("ul", "aria-label", "Location");
+            }
+        }
+
         protected string CheckIn
         {
             get
@@ -60,7 +68,18 @@ namespace Airbnb.Scraper.Pages
         {
             get
             {
-                return CssBegins("a", "href", "/rooms");
+                return Css("a", new List<List<string>>() { 
+                    new List<string>() { "href", BeginsWith, "/rooms" },
+                    new List<string>() { "target", BeginsWith, "listing" } }
+                );
+            }
+        }
+
+        protected string PaginateNext
+        {
+            get
+            {
+                return Css("a", "aria-label", "Next");
             }
         }
     }
