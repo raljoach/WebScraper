@@ -13,6 +13,6 @@ namespace Airbnb.Scraper.Pages
             this.Url = url;
         }
 
-        public string Url { private get; set; }
+        public string Url { get; private set; }
     }
 }

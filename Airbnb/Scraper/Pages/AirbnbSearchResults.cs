@@ -14,6 +14,7 @@ namespace Airbnb.Scraper.Pages
         internal AirbnbSearchResults(IWebDriver driver)
         {
             _driver = driver;
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
         }
 
         public List<AirbnbListing> GetListings()
@@ -27,12 +28,31 @@ namespace Airbnb.Scraper.Pages
                 var listings = _driver.FindElements(By.CssSelector(Listings));
                 foreach (var listing in listings)
                 {
-                    var url = listing.GetAttribute("href");
-                    if (!alreadyHave.Add(url))
+                    var attempts = 0;
+                    //var found
+                    do
                     {
-                        var airbnbListing = new AirbnbListing(url);
-                        results.Add(airbnbListing);
-                    }
+                        try
+                        {
+                            var url = listing.GetAttribute("href");
+                            if (!alreadyHave.Add(url))
+                            {
+                                var airbnbListing = new AirbnbListing(url);
+                                results.Add(airbnbListing);
+                            }
+                            break;
+                        }
+                        catch (StaleElementReferenceException)
+                        {
+                            attempts++;
+                            if (attempts < 2)
+                            {
+                                listings = _driver.FindElements(By.CssSelector(Listings));
+                            }
+                            else
+                                throw;
+                        }
+                    } while (attempts<2);
                 }
                 try
                 {
@@ -40,7 +60,7 @@ namespace Airbnb.Scraper.Pages
                     if (next != null)
                     {
                         next.Click();
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
                         //listings = _driver.FindElements(By.CssSelector(Listings));
                     }
                 }

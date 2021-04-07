@@ -1,7 +1,9 @@
 ﻿using Airbnb.Scraper;
 using Airbnb.Scraper.Pages;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +24,8 @@ namespace Airbnb.ScraperTool
             
             var results = search.Search();
             var listings = results.GetListings();
-
+            var json = JsonConvert.SerializeObject(listings);
+            File.WriteAllText(@"c:\data\airbnb\depoebay\20210503-20210510.json", json);
 
             Console.ReadLine();
         }
