@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TableData;
 
 namespace Airbnb.ScraperTool
 {
@@ -24,9 +23,10 @@ namespace Airbnb.ScraperTool
             
             var results = search.Search();
             var listings = results.GetListings();
+            Console.WriteLine("Listings: " + listings.Count);
             var json = JsonConvert.SerializeObject(listings);
             File.WriteAllText(@"c:\data\airbnb\depoebay\20210503-20210510.json", json);
-
+            Console.WriteLine("Program has ended. Hit enter to exit.");
             Console.ReadLine();
         }        
     }

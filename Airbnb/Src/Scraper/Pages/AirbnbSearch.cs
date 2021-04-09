@@ -14,7 +14,9 @@ namespace Airbnb.Scraper.Pages
         private IWebDriver _driver;
         public AirbnbSearch()
         {
-            _driver = new ChromeDriver();
+            var chromeOptions = new ChromeOptions();
+            //chromeOptions.AddArguments("headless");
+            _driver = new ChromeDriver(chromeOptions);
 
             // navigate to url
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));

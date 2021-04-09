@@ -26,8 +26,10 @@ namespace Airbnb.Scraper.Pages
             do
             {
                 var listings = _driver.FindElements(By.CssSelector(Listings));
-                foreach (var listing in listings)
+                //foreach (var listing in listings)
+                for (var i=0; i<listings.Count; i++)
                 {
+                    var listing = listings[i];
                     var attempts = 0;
                     //var found
                     do
@@ -35,9 +37,20 @@ namespace Airbnb.Scraper.Pages
                         try
                         {
                             var url = listing.GetAttribute("href");
+                            
                             if (!alreadyHave.Add(url))
                             {
                                 var airbnbListing = new AirbnbListing(url);
+                                airbnbListing.Description = listing.GetAttribute("aria-label");
+                                airbnbListing.Total = listing.FindElement(By.XPath("//span[contains(text(),' total')]")).Text;
+                                airbnbListing.PerNight = listing.FindElement(By.XPath("//span[contains(text(),' per night')]")).Text;
+                                airbnbListing.Location = listing.FindElement(By.XPath("//div[contains(text(),' in ')]")).Text;
+                                try
+                                {                                    
+                                    airbnbListing.Rating = listing.FindElement(By.XPath("//span[starts-with(@aria-label,'Rating ') and contains(@aria-label,' out of ')]")).Text;
+                                }
+                                catch(NoSuchElementException)
+                                { }
                                 results.Add(airbnbListing);
                             }
                             break;
@@ -48,6 +61,7 @@ namespace Airbnb.Scraper.Pages
                             if (attempts < 2)
                             {
                                 listings = _driver.FindElements(By.CssSelector(Listings));
+                                listing = listings[i];
                             }
                             else
                                 throw;

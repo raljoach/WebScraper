@@ -56,14 +56,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="old\AirbnbWebSite.cs" />
-    <Compile Include="old\AirbnbNavigator.cs" />
-    <Compile Include="old\AirbnbScraper.cs" />
-    <Compile Include="old\AirbnbScraperOld.cs" />
-    <Compile Include="old\AirbnbSelector.cs" />
-    <Compile Include="old\Listing.cs" />
-    <Compile Include="old\ListingExtensions.cs" />
-    <Compile Include="old\Page.cs" />
     <Compile Include="Pages\AirbnbListing.cs" />
     <Compile Include="Pages\AirbnbSearch.cs" />
     <Compile Include="Pages\AirbnbBase.cs" />
@@ -78,7 +70,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="old\packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
