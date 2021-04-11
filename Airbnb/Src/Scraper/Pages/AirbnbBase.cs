@@ -70,7 +70,7 @@ namespace Airbnb.Scraper.Pages
             {
                 return Css("a", new List<List<string>>() { 
                     new List<string>() { "href", BeginsWith, "/rooms" },
-                    new List<string>() { "target", BeginsWith, "listing" } }
+                    new List<string>() { "target", BeginsWith, "listing_" } }                    
                 );
             }
         }
@@ -81,6 +81,17 @@ namespace Airbnb.Scraper.Pages
             {
                 return Css("a", "aria-label", "Next");
             }
+        }
+
+        protected string GetListingFromAbove(string url)
+        {
+            var index = url.IndexOf("/rooms");
+            var href = url.Substring(index);
+            return Css("a", new List<List<string>>() {
+                    new List<string>() { "href", "=", href },                    
+                    new List<string>() { "data-check-info-section", "=", "true" } }
+            );
+
         }
     }
 }
