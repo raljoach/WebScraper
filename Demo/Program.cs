@@ -8,41 +8,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airbnb.ScraperTool
+namespace Demo
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            // Acquire
-            ScrapeAirbnbTest1();
-            ScrapeAirbnbTest2();
+            Console.WriteLine(
+@" -------------------------------
+   Scraper
+   -------------------------------
+   Enter Destinations:
+"
+                );
+
+            var destinations = new List<Destination>();
+            string destination = null;
+            while(!string.IsNullOrWhiteSpace(destination = Console.ReadLine()))
+            {
+                destinations.AddRange(Create(destination));
+                ScrapeAirbnb(destinations);
+            }
         }
 
-        private static void ScrapeAirbnbTest2()
-        { 
-            List<Destination> destinations = Create("Uruguay,Armenia,Maldives,New Zealand,Bali,Sochi");
-            ScrapeAirbnb(destinations);
-        }
 
         private static List<Destination> Create(string destinations)
         {
             var result = new List<Destination>();
             var tokens = destinations.Split(',');
-            foreach(var name in tokens)
+            foreach (var name in tokens)
             {
                 result.Add(new Destination(name));
             }
             return result;
         }
 
-        private static void ScrapeAirbnbTest1()
-        {            
-            ScrapeAirbnb(
-                "Depoe Bay, OR",
-                new DateTime(2021, 05, 03),
-                new DateTime(2021, 05, 10));            
-        }
         private static void ScrapeAirbnb(List<Destination> destinations)
         {
             foreach (var destination in destinations)
@@ -96,17 +96,16 @@ namespace Airbnb.ScraperTool
         }
 
         private static string CreateFileLocation(string query, DateTime checkInDate, DateTime checkoutDate)
-        {
-            //return @"c:\data\airbnb\depoebay\20210503-20210510.json";
+        {            
             var root = @"c:\data\airbnb";
 
             query = query.Replace(" ", "");
             var tokens = query.Split(',');
             var folder = string.Empty;
 
-            foreach(var token in tokens)
+            foreach (var token in tokens)
             {
-                if(folder != string.Empty)
+                if (folder != string.Empty)
                 {
                     folder += "-";
                 }
@@ -121,9 +120,7 @@ namespace Airbnb.ScraperTool
             var ci = checkInDate;
             var co = checkoutDate;
             var file = $"{ci.Year}{ci.Month}{ci.Day}-{co.Year}{co.Month}{co.Day}.json";
-            var fullPath = Path.Combine(folderPath, file);
-            Console.WriteLine($"Path: {fullPath}");
-            return fullPath;
+            return Path.Combine(folderPath, file);
         }
     }
 }
