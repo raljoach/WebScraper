@@ -1,5 +1,6 @@
 ﻿using Airbnb.Scraper;
 using Airbnb.Scraper.Pages;
+using Airbnb.Scraper.Workers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,15 @@ namespace Airbnb.ScraperTool
             // Acquire
             ScrapeAirbnbTest1();
             ScrapeAirbnbTest2();
+            ScrapeAirbnbTest3();
+            
         }
 
+        private static void ScrapeAirbnbTest3()
+        {
+            var destinations = new List<string>() { "Uruguay", "Armenia", "Maldives", "New Zealand", "Bali", "Sochi" }
+            ScrapeAirbnb(destinations);
+        }
         private static void ScrapeAirbnbTest2()
         { 
             List<Destination> destinations = Create("Uruguay,Armenia,Maldives,New Zealand,Bali,Sochi");
@@ -43,6 +51,27 @@ namespace Airbnb.ScraperTool
                 new DateTime(2021, 05, 03),
                 new DateTime(2021, 05, 10));            
         }
+
+        private static void ScrapeAirbnb(List<string> places)
+        {
+            var destinations = new Buffer<Destination>(100);
+            var reservations = new Buffer<Reservation>(100);
+            var listings = new Buffer<AirbnbListing>(100);
+                       
+            new AirbnbDestinationWorker(destinations, reservations).Start();
+            new AirbnbDestinationWorker(destinations, reservations).Start();
+            new AirbnbDestinationWorker(destinations, reservations).Start();
+            new AirbnbReservationWorker(reservations,listings).Start();
+            new AirbnbReservationWorker(reservations, listings).Start();
+            new AirbnbReservationWorker(reservations, listings).Start();
+            new AirbnbListingWorker(listings).Start();
+            new AirbnbListingWorker(listings).Start();
+            new AirbnbListingWorker(listings).Start();
+
+            Parallel.ForEach(places, (place) => new DestinationProducer(destinations).Add(new Destination(place)));
+
+        }
+
         private static void ScrapeAirbnb(List<Destination> destinations)
         {
             foreach (var destination in destinations)
