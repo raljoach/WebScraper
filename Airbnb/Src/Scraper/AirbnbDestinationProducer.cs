@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Scraper
 {
-    public class DestinationProducer : Producer<Destination>
+    public class AirbnbDestinationProducer : Producer<Destination>
     {
-        public DestinationProducer(Buffer<Destination> buffer) : base(buffer)
+        public AirbnbDestinationProducer(Buffer<Destination> buffer) : base(buffer)
         {
             
         }        

@@ -60,7 +60,8 @@
     <Compile Include="AirbnbDestinationWorker.cs" />
     <Compile Include="AirbnbReservationWorker.cs" />
     <Compile Include="Destination.cs" />
-    <Compile Include="DestinationProducer.cs" />
+    <Compile Include="AirbnbDestinationProducer.cs" />
+    <Compile Include="ListingService.cs" />
     <Compile Include="Pages\AirbnbListing.cs" />
     <Compile Include="Pages\AirbnbSearch.cs" />
     <Compile Include="Pages\AirbnbBase.cs" />

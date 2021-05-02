@@ -57,18 +57,18 @@ namespace Airbnb.ScraperTool
             var destinations = new Buffer<Destination>(100);
             var reservations = new Buffer<Reservation>(100);
             var listings = new Buffer<AirbnbListing>(100);
-                       
+            var listingService = new ListingService();           
             new AirbnbDestinationWorker(destinations, reservations).Start();
             new AirbnbDestinationWorker(destinations, reservations).Start();
             new AirbnbDestinationWorker(destinations, reservations).Start();
             new AirbnbReservationWorker(reservations,listings).Start();
             new AirbnbReservationWorker(reservations, listings).Start();
             new AirbnbReservationWorker(reservations, listings).Start();
-            new AirbnbListingWorker(listings).Start();
-            new AirbnbListingWorker(listings).Start();
-            new AirbnbListingWorker(listings).Start();
+            new AirbnbListingWorker(listings, listingService).Start();
+            new AirbnbListingWorker(listings, listingService).Start();
+            new AirbnbListingWorker(listings, listingService).Start();
 
-            Parallel.ForEach(places, (place) => new DestinationProducer(destinations).Add(new Destination(place)));
+            Parallel.ForEach(places, (place) => new AirbnbDestinationProducer(destinations).Add(new Destination(place)));
 
         }
 
