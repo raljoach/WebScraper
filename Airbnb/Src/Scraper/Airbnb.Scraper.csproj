@@ -60,6 +60,7 @@
     <Compile Include="Objects\Geographic\Country.cs" />
     <Compile Include="Objects\Geographic\Location.cs" />
     <Compile Include="Objects\Geographic\State.cs" />
+    <Compile Include="Services\IngestionService.cs" />
     <Compile Include="Workers\AirbnbListingWorker.cs" />
     <Compile Include="Workers\AirbnbDestinationWorker.cs" />
     <Compile Include="Workers\AirbnbReservationWorker.cs" />
