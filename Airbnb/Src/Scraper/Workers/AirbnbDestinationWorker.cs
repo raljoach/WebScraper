@@ -1,12 +1,10 @@
-﻿using Airbnb.Scraper.Pages;
-using Airbnb.Scraper.Workers;
+﻿using Airbnb.Scraper.Objects;
+using Airbnb.Scraper.Workers.Generic;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Airbnb.Scraper
+namespace Airbnb.Scraper.Workers
 {
     public class AirbnbDestinationWorker 
     {

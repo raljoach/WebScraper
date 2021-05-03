@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airbnb.Scraper.Workers
+namespace Airbnb.Scraper.Workers.Generic
 {
     public class Consumer<T> : Worker<T>
     {

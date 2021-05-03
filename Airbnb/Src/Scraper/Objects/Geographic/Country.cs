@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Airbnb.Scraper
+namespace Airbnb.Scraper.Objects.Geographic
 {
-    public class ListingService
+    public class Country : Location
     {
     }
 }

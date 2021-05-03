@@ -1,22 +1,19 @@
-﻿using Airbnb.Scraper.Pages;
-using Airbnb.Scraper.Workers;
+﻿using Airbnb.Scraper.Objects;
+using Airbnb.Scraper.Services;
+using Airbnb.Scraper.Workers.Generic;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Airbnb.Scraper
+namespace Airbnb.Scraper.Workers
 {
     public class AirbnbListingWorker
     {
         private Consumer<AirbnbListing> consumer;
-        private ListingService service;
+        private ListingService listingService;
 
         public AirbnbListingWorker(Buffer<AirbnbListing> listings, ListingService listingService)
         {
             consumer = new Consumer<AirbnbListing>(listings);
-            service = listingService;
+            this.listingService = listingService;
         }
 
         public void Start()

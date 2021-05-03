@@ -56,23 +56,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirbnbListingWorker.cs" />
-    <Compile Include="AirbnbDestinationWorker.cs" />
-    <Compile Include="AirbnbReservationWorker.cs" />
-    <Compile Include="Destination.cs" />
-    <Compile Include="AirbnbDestinationProducer.cs" />
-    <Compile Include="ListingService.cs" />
-    <Compile Include="Pages\AirbnbListing.cs" />
+    <Compile Include="Objects\Geographic\City.cs" />
+    <Compile Include="Objects\Geographic\Country.cs" />
+    <Compile Include="Objects\Geographic\Location.cs" />
+    <Compile Include="Objects\Geographic\State.cs" />
+    <Compile Include="Workers\AirbnbListingWorker.cs" />
+    <Compile Include="Workers\AirbnbDestinationWorker.cs" />
+    <Compile Include="Workers\AirbnbReservationWorker.cs" />
+    <Compile Include="Objects\Destination.cs" />
+    <Compile Include="Workers\AirbnbDestinationProducer.cs" />
+    <Compile Include="Services\ListingService.cs" />
+    <Compile Include="Objects\AirbnbListing.cs" />
     <Compile Include="Pages\AirbnbSearch.cs" />
     <Compile Include="Pages\AirbnbBase.cs" />
     <Compile Include="Pages\AirbnbSearchResults.cs" />
     <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Workers\PlacesProducer.cs" />
+    <Compile Include="Workers\PlacesWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reservation.cs" />
-    <Compile Include="Workers\Buffer.cs" />
-    <Compile Include="Workers\Consumer.cs" />
-    <Compile Include="Workers\Producer.cs" />
-    <Compile Include="Workers\Worker.cs" />
+    <Compile Include="Objects\Reservation.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Workers\Generic\Buffer.cs" />
+    <Compile Include="Workers\Generic\Consumer.cs" />
+    <Compile Include="Workers\Generic\Producer.cs" />
+    <Compile Include="Workers\Generic\Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TableData\TableData.csproj">

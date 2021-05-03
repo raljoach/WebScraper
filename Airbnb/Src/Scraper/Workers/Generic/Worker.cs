@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Airbnb.Scraper.Workers
+namespace Airbnb.Scraper.Workers.Generic
 {
     public abstract class Worker<T>
     {

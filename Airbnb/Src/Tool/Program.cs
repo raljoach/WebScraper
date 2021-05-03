@@ -1,12 +1,12 @@
-﻿using Airbnb.Scraper;
+﻿using Airbnb.Scraper.Objects;
 using Airbnb.Scraper.Pages;
+using Airbnb.Scraper.Services;
 using Airbnb.Scraper.Workers;
+using Airbnb.Scraper.Workers.Generic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Airbnb.ScraperTool
@@ -52,12 +52,17 @@ namespace Airbnb.ScraperTool
                 new DateTime(2021, 05, 10));            
         }
 
-        private static void ScrapeAirbnb(List<string> places)
+        private static void ScrapeAirbnb(List<string> where)
         {
+            var places = new Buffer<string>(100);
             var destinations = new Buffer<Destination>(100);
             var reservations = new Buffer<Reservation>(100);
             var listings = new Buffer<AirbnbListing>(100);
-            var listingService = new ListingService();           
+            var locationService = new LocationService();
+            var listingService = new ListingService();
+            new PlacesWorker(places, destinations, locationService).Start();
+            new PlacesWorker(places, destinations, locationService).Start();
+            new PlacesWorker(places, destinations, locationService).Start();
             new AirbnbDestinationWorker(destinations, reservations).Start();
             new AirbnbDestinationWorker(destinations, reservations).Start();
             new AirbnbDestinationWorker(destinations, reservations).Start();
@@ -68,8 +73,8 @@ namespace Airbnb.ScraperTool
             new AirbnbListingWorker(listings, listingService).Start();
             new AirbnbListingWorker(listings, listingService).Start();
 
-            Parallel.ForEach(places, (place) => new AirbnbDestinationProducer(destinations).Add(new Destination(place)));
-
+            //Parallel.ForEach(places, (place) => new AirbnbDestinationProducer(destinations).Add(new Destination(place)));
+            Parallel.ForEach(where, (p) => new PlacesProducer(places).Add(p));
         }
 
         private static void ScrapeAirbnb(List<Destination> destinations)

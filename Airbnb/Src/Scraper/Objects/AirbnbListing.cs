@@ -1,4 +1,4 @@
-﻿namespace Airbnb.Scraper.Pages
+﻿namespace Airbnb.Scraper.Objects
 {
     public class AirbnbListing
     {        

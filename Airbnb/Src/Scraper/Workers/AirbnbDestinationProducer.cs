@@ -1,11 +1,7 @@
-﻿using Airbnb.Scraper.Workers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Airbnb.Scraper.Objects;
+using Airbnb.Scraper.Workers.Generic;
 
-namespace Airbnb.Scraper
+namespace Airbnb.Scraper.Workers
 {
     public class AirbnbDestinationProducer : Producer<Destination>
     {
