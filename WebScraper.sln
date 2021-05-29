@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{068E8FF5-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{9083E87F-9832-441C-9E39-01C5AA72843E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kayak.Scraper", "Kayak\Src\Scraper\Kayak.Scraper.csproj", "{4D1DB847-79E4-46B6-85D9-B494C5E573B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kayak.ScraperTool", "Kayak\Src\Tool\Kayak.ScraperTool.csproj", "{DF3AC29E-19B9-4914-9640-531FD220F9E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{9083E87F-9832-441C-9E39-01C5AA72843E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9083E87F-9832-441C-9E39-01C5AA72843E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9083E87F-9832-441C-9E39-01C5AA72843E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1DB847-79E4-46B6-85D9-B494C5E573B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1DB847-79E4-46B6-85D9-B494C5E573B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1DB847-79E4-46B6-85D9-B494C5E573B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1DB847-79E4-46B6-85D9-B494C5E573B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF3AC29E-19B9-4914-9640-531FD220F9E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3AC29E-19B9-4914-9640-531FD220F9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3AC29E-19B9-4914-9640-531FD220F9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3AC29E-19B9-4914-9640-531FD220F9E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
